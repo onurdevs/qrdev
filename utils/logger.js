@@ -1,4 +1,13 @@
 const { createLogger, format, transports } = require("winston");
+const fs = require("fs");
+const path = require("path");
+
+const logDir = path.join(__dirname, "..", "logs");
+
+// create logs directory if it doesn't exist
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
 
 const logger = createLogger({
   level: "info",
@@ -10,11 +19,17 @@ const logger = createLogger({
   ),
   defaultMeta: { service: "qrmenu-backend" },
   transports: [
+    new transports.File({ filename: path.join(logDir, "error.log"), level: "error" }),
+    new transports.File({ filename: path.join(logDir, "combined.log") }),
     new transports.Console(),
-    // gelecekte şunlar da eklenebilir:
-    // new transports.File({ filename: 'logs/error.log', level: 'error' }),
-    // new transports.File({ filename: 'logs/combined.log' })
   ],
 });
+
+// stream interface for morgan
+logger.stream = {
+  write: (message) => {
+    logger.info(message.trim());
+  },
+};
 
 module.exports = logger;

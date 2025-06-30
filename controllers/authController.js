@@ -2,6 +2,7 @@ const db = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const generateToken = require("../utils/generateToken");
+const logger = require("../utils/logger");
 
 const User = db.User;
 
@@ -25,7 +26,7 @@ exports.register = async (req, res) => {
       token: generateToken(user.id),
     });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     return res.status(500).json({ message: "Kayıt sırasında bir hata oluştu." });
   }
 };
@@ -54,7 +55,7 @@ exports.login = async (req, res) => {
       token: generateToken(user.id),
     });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     return res.status(500).json({ message: "Giriş sırasında bir hata oluştu." });
   }
 };
@@ -78,7 +79,7 @@ exports.updateSubscriptionPlan = async (req, res) => {
       plan: req.user.subscriptionPlan,
     });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(500).json({ message: "Abonelik planı güncellenemedi." });
   }
 };
