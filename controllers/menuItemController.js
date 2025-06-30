@@ -29,3 +29,18 @@ exports.getMenuItemsByCategory = async (req, res) => {
     res.status(500).json({ message: "Ürünler getirilemedi." });
   }
 };
+
+exports.deleteMenuItem = async (req, res) => {
+  try {
+    const menuItem = await MenuItem.findByPk(req.params.id);
+
+    if (!menuItem) {
+      return res.status(404).json({ message: "Ürün bulunamadı." });
+    }
+
+    await menuItem.destroy();
+    res.json({ message: "Ürün silindi." });
+  } catch (err) {
+    res.status(500).json({ message: "Ürün silinemedi." });
+  }
+};
