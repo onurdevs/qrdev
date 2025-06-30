@@ -9,5 +9,6 @@ const {
 router.use(auth);
 router.post("/", createMenuItem);
 router.get("/", getMenuItemsByCategory);
+router.delete("/:id", deleteMenuItem);
 
 module.exports = router;
