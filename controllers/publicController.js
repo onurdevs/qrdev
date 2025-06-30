@@ -1,5 +1,6 @@
 const db = require("../models");
 const generateQRCode = require("../utils/qrGenerator");
+const logger = require("../utils/logger");
 
 const Restaurant = db.Restaurant;
 const Category = db.Category;
@@ -36,7 +37,7 @@ exports.getQrCode = async (req, res) => {
     const qrDataUrl = await generateQRCode(publicUrl);
     res.json({ qr: qrDataUrl, url: publicUrl });
   } catch (err) {
-    logger.error("getSomething hatası: %O", err);
+    logger.error("getQrCode hatası: %O", err);
 
     res.status(500).json({ message: "QR kod oluşturulamadı." });
   }
