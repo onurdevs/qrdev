@@ -1,5 +1,6 @@
 const db = require("../models");
 const Restaurant = db.Restaurant;
+const logger = require("../utils/logger");
 
 exports.createRestaurant = async (req, res) => {
   try {
@@ -15,7 +16,7 @@ exports.createRestaurant = async (req, res) => {
 
     return res.status(201).json(restaurant);
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(500).json({ message: "Restoran oluşturulamadı." });
   }
 };
@@ -28,7 +29,7 @@ exports.getMyRestaurants = async (req, res) => {
 
     return res.json(restaurants);
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(500).json({ message: "Restoranlar alınamadı." });
   }
 };
@@ -46,7 +47,7 @@ exports.updateRestaurant = async (req, res) => {
     await restaurant.update(req.body);
     return res.json(restaurant);
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(500).json({ message: "Restoran güncellenemedi." });
   }
 };
@@ -64,7 +65,7 @@ exports.deleteRestaurant = async (req, res) => {
     await restaurant.destroy();
     return res.json({ message: "Restoran silindi." });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(500).json({ message: "Silme işlemi başarısız." });
   }
 };

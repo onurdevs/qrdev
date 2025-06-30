@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const db = require("../models");
+const logger = require("../utils/logger");
 
 const User = db.User;
 
@@ -23,7 +24,7 @@ const authMiddleware = async (req, res, next) => {
     req.user = user; // diğer endpointlerde kullanılabilir
     next();
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     return res.status(401).json({ message: "Geçersiz token." });
   }
 };

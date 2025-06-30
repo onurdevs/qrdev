@@ -25,7 +25,7 @@ exports.getPublicMenu = async (req, res) => {
       categories,
     });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(500).json({ message: "Menü alınamadı." });
   }
 };
