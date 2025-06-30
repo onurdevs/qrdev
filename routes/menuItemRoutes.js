@@ -4,6 +4,7 @@ const auth = require("../middlewares/authMiddleware");
 const {
   createMenuItem,
   getMenuItemsByCategory,
+  deleteMenuItem,
 } = require("../controllers/menuItemController");
 
 router.use(auth);
